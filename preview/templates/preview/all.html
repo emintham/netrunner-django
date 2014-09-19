@@ -2,8 +2,8 @@
 {% if card_list %}
 	<ul>
 	{% for card in card_list %}
-		{% with "preview/"|add:card.code|add:".png" as template %}
-		<li><img src="{% static template %}"/></li>
+		{% with "cards/"|add:card.code|add:".png" as card_path %}
+		<li><img src="{% static card_path %}"/></li>
 		{% endwith %}
 	{% endfor %}
 	</ul>
