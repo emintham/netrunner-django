@@ -1,0 +1,12 @@
+{% load staticfiles %}
+{% if card_list %}
+	<ul>
+	{% for card in card_list %}
+		{% with "preview/"|add:card.code|add:".png" as template %}
+		<li><img src="{% static template %}"/></li>
+		{% endwith %}
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>No cards available.</p>
+{% endif %}

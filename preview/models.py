@@ -33,5 +33,5 @@ class Card(Document):
 	uniqueness = BooleanField()
 	meta = {
 		'collection': 'cards',
-		'ordering': ['-code']
+		'ordering': ['code']
 	}
