@@ -7,6 +7,16 @@ def index(request):
 	return render(request, 'preview/index.html', context)
 
 def all(request):
-	card_list = Card.objects.all().order_by('code')
-	context = { 'card_list': card_list}
+	runners = Card.objects.filter(side_code='runner')
+	runner_identities = runners.filter(type_code='identity')
+	runner_events = runners.filter(type_code='event')
+	runner_hardwares = runners.filter(type_code='hardware')
+	runner_programs = runners.filter(type_code='program')
+	context = {
+		'runners': runners,
+		'runner_identities': runner_identities,
+		'runner_events': runner_events,
+		'runner_hardwares': runner_hardwares,
+		'runner_programs': runner_programs
+	}
 	return render(request, 'preview/all.html', context)
