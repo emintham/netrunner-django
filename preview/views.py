@@ -13,7 +13,7 @@ def all(request):
 	runner_hardwares = runners.filter(type_code='hardware')
 	runner_programs = runners.filter(type_code='program')
 	context = {
-		'runners': runners,
+		'runners': runners.to_json(),
 		'runner_identities': runner_identities,
 		'runner_events': runner_events,
 		'runner_hardwares': runner_hardwares,

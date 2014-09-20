@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<title>Android: Netrunner - Deckbuilder</title>
@@ -12,6 +12,13 @@
 		{% load preview_extras %}
 	</head>
 	<body>
+		<div class="message">
+			<div style="padding: 5px;">
+				<div id="alert-message" class="alert alert-info" role="alert">
+				</div> <!-- alert-message -->
+			</div> <!-- padding -->
+		</div> <!-- message -->
+
 		<h1>Deckbuilder</h1>
 		{% if runners %}
 			<div class="panel-group" id="accordion">
@@ -30,7 +37,7 @@
 								{% for card in group %}
 									{% with "cards/"|add:card.code|add:".png" as card_path %}
 									<div class="col-xs-6 col-sm-3">
-										<a href="#" class="thumbnail">
+										<a href="#" class="thumbnail" data-code="{{ card.code }}" data-title="{{ card.title }}">
 											<img src="{% static card_path %}"/>
 										</a>
 									</div>
@@ -57,7 +64,7 @@
 								{% for card in group %}
 									{% with "cards/"|add:card.code|add:".png" as card_path %}
 									<div class="col-xs-6 col-sm-3">
-										<a href="#" class="thumbnail">
+										<a href="#" class="thumbnail" data-code="{{ card.code }}" data-title="{{ card.title }}">
 											<img src="{% static card_path %}"/>
 										</a>
 									</div>
@@ -84,7 +91,7 @@
 							{% for card in group %}
 								{% with "cards/"|add:card.code|add:".png" as card_path %}
 								<div class="col-xs-6 col-sm-3">
-									<a href="#" class="thumbnail">
+									<a href="#" class="thumbnail" data-code="{{ card.code }}" data-title="{{ card.title }}">
 										<img src="{% static card_path %}"/>
 									</a>
 								</div>
@@ -111,7 +118,7 @@
 							{% for card in group %}
 								{% with "cards/"|add:card.code|add:".png" as card_path %}
 								<div class="col-xs-6 col-sm-3">
-									<a href="#" class="thumbnail">
+									<a href="#" class="thumbnail" data-code="{{ card.code }}" data-title="{{ card.title }}">
 										<img src="{% static card_path %}"/>
 									</a>
 								</div>
@@ -126,5 +133,32 @@
 	{% else %}
 		<p>No cards available.</p>
 	{% endif %}
+
+	<script type="text/javascript">
+		var cards = {};
+		var deck = {
+			arr: [],
+			addToDeck: function(card) {
+				this['arr'].push(card);
+			}
+		};
+		
+		// push runners into a cards object indexed by code
+		$(document).ready(function(){
+			// get runners from template
+			var runners = {{ runners|safe }};
+
+			$.each(runners, function(index, value){
+				cards[value['code']] = value;
+			});
+		});
+
+		$(".thumbnail").on("click", function() {
+			var card = $(this);
+
+			deck.addToDeck(cards[card.attr('data-code')]);
+			$("#alert-message").html("Added " + card.attr('data-title'));
+		});
+	</script>
 	</body>
 </html>
