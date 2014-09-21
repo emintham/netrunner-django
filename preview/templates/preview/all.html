@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Android: Netrunner - Deckbuilder</title>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		{% load bootstrap3 %}
@@ -19,120 +20,145 @@
 			</div> <!-- padding -->
 		</div> <!-- message -->
 
-		<h1>Deckbuilder</h1>
-		{% if runners %}
-			<div class="panel-group" id="accordion">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-							Identity
-							</a>
-						</h4>
-					</div> <!-- panel-heading -->
-					<div id="collapseOne" class="panel-collapse collapse in">
-						<div class="panel-body">
-							{% for group in runner_identities|group_by:4 %}
-							<div class="row">
-								{% for card in group %}
-									{% with "cards/"|add:card.code|add:".png" as card_path %}
-									<div class="col-xs-6 col-sm-3">
-										<a href="#" class="thumbnail" data-code="{{ card.code }}" data-title="{{ card.title }}">
-											<img src="{% static card_path %}"/>
+		<div class="container-fluid">
+			<h1>Deckbuilder</h1>
+			{% if runners %}
+				<div class="row">
+					<div class="col-md-9" role="main">
+						<div class="panel-group" id="accordion">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+										Identity
 										</a>
-									</div>
-									{% endwith %}
-								{% endfor %}
-							</div> <!-- row -->
-							{% endfor %}
-						</div> <!-- panel-body -->
-					</div> <!-- collapseOne -->
-				</div> <!-- panel -->
+									</h4>
+								</div> <!-- panel-heading -->
+								<div id="collapseOne" class="panel-collapse collapse in">
+									<div class="panel-body">
+										{% for group in runner_identities|group_by:4 %}
+										<div class="row">
+											{% for card in group %}
+												{% with "cards/"|add:card.code|add:".png" as card_path %}
+												<div class="col-xs-6 col-sm-3">
+													<a href="#" class="thumbnail {{ card.faction_code }}" data-code="{{ card.code }}" data-title="{{ card.title }}">
+														<img src="{% static card_path %}"/>
+													</a>
+												</div>
+												{% endwith %}
+											{% endfor %}
+										</div> <!-- row -->
+										{% endfor %}
+									</div> <!-- panel-body -->
+								</div> <!-- collapseOne -->
+							</div> <!-- panel -->
 
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-							Events
-							</a>
-						</h4>
-					</div> <!-- panel-heading -->
-					<div id="collapseTwo" class="panel-collapse collapse">
-						<div class="panel-body">
-							{% for group in runner_events|group_by:4 %}
-							<div class="row">
-								{% for card in group %}
-									{% with "cards/"|add:card.code|add:".png" as card_path %}
-									<div class="col-xs-6 col-sm-3">
-										<a href="#" class="thumbnail" data-code="{{ card.code }}" data-title="{{ card.title }}">
-											<img src="{% static card_path %}"/>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+										Events
 										</a>
-									</div>
-									{% endwith %}
-								{% endfor %}
-						</div> <!-- row -->
-						{% endfor %}
-					</div> <!-- panel-body -->
-				</div> <!-- collapseTwo -->
-			</div> <!-- panel -->
+									</h4>
+								</div> <!-- panel-heading -->
+								<div id="collapseTwo" class="panel-collapse collapse">
+									<div class="panel-body">
+										{% for group in runner_events|group_by:4 %}
+										<div class="row">
+											{% for card in group %}
+												{% with "cards/"|add:card.code|add:".png" as card_path %}
+												<div class="col-xs-6 col-sm-3">
+													<a href="#" class="thumbnail {{ card.faction_code }}" data-code="{{ card.code }}" data-title="{{ card.title }}">
+														<img src="{% static card_path %}"/>
+													</a>
+												</div>
+												{% endwith %}
+											{% endfor %}
+										</div> <!-- row -->
+										{% endfor %}
+									</div> <!-- panel-body -->
+								</div> <!-- collapseTwo -->
+							</div> <!-- panel -->
 
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-						Hardware
-						</a>
-					</h4>
-				</div> <!-- panel-heading -->
-				<div id="collapseThree" class="panel-collapse collapse">
-					<div class="panel-body">
-						{% for group in runner_hardwares|group_by:4 %}
-						<div class="row">
-							{% for card in group %}
-								{% with "cards/"|add:card.code|add:".png" as card_path %}
-								<div class="col-xs-6 col-sm-3">
-									<a href="#" class="thumbnail" data-code="{{ card.code }}" data-title="{{ card.title }}">
-										<img src="{% static card_path %}"/>
-									</a>
-								</div>
-								{% endwith %}
-							{% endfor %}
-						</div> <!-- row -->
-						{% endfor %}
-					</div> <!-- panel-body -->
-				</div> <!-- collapseThree -->
-			</div> <!-- panel -->
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+										Hardware
+										</a>
+									</h4>
+								</div> <!-- panel-heading -->
+								<div id="collapseThree" class="panel-collapse collapse">
+									<div class="panel-body">
+										{% for group in runner_hardwares|group_by:4 %}
+										<div class="row">
+											{% for card in group %}
+												{% with "cards/"|add:card.code|add:".png" as card_path %}
+												<div class="col-xs-6 col-sm-3">
+													<a href="#" class="thumbnail {{ card.faction_code }}" data-code="{{ card.code }}" data-title="{{ card.title }}">
+														<img src="{% static card_path %}"/>
+													</a>
+												</div>
+												{% endwith %}
+											{% endfor %}
+										</div> <!-- row -->
+										{% endfor %}
+									</div> <!-- panel-body -->
+								</div> <!-- collapseThree -->
+							</div> <!-- panel -->
 
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-						Programs
-						</a>
-					</h4>
-				</div> <!-- panel-heading -->
-				<div id="collapseFour" class="panel-collapse collapse">
-					<div class="panel-body">
-						{% for group in runner_programs|group_by:4 %}
-						<div class="row">
-							{% for card in group %}
-								{% with "cards/"|add:card.code|add:".png" as card_path %}
-								<div class="col-xs-6 col-sm-3">
-									<a href="#" class="thumbnail" data-code="{{ card.code }}" data-title="{{ card.title }}">
-										<img src="{% static card_path %}"/>
-									</a>
-								</div>
-								{% endwith %}
-							{% endfor %}
-						</div> <!-- row -->
-						{% endfor %}
-					</div> <!-- panel-body -->
-				</div> <!-- collapseFour -->
-			</div> <!-- panel -->
-		</div> <!-- panel group -->
-	{% else %}
-		<p>No cards available.</p>
-	{% endif %}
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+										Programs
+										</a>
+									</h4>
+								</div> <!-- panel-heading -->
+								<div id="collapseFour" class="panel-collapse collapse">
+									<div class="panel-body">
+										{% for group in runner_programs|group_by:4 %}
+										<div class="row">
+											{% for card in group %}
+												{% with "cards/"|add:card.code|add:".png" as card_path %}
+												<div class="col-xs-6 col-sm-3">
+													<a href="#" class="thumbnail {{ card.faction_code }}" data-code="{{ card.code }}" data-title="{{ card.title }}">
+														<img src="{% static card_path %}"/>
+													</a>
+												</div>
+												{% endwith %}
+											{% endfor %}
+										</div> <!-- row -->
+										{% endfor %}
+									</div> <!-- panel-body -->
+								</div> <!-- collapseFour -->
+							</div> <!-- panel -->
+						</div> <!-- panel group -->
+					</div> <!-- col-md-9 -->
+					<div class="col-md-3">
+						<div class="panel-group" id="accordion2">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion2" href="#collapseFive">
+										Deck
+										</a>
+									</h4>
+								</div> <!-- panel-heading -->
+								<div id="collapseFive" class="panel-collapse collapse in"
+									<div class="panel-body">
+										<ul class="list-group" id="deck-list">
+										</ul>
+									</div> <!-- panel-body -->
+								</div> <!-- collapseFive -->
+							</div>	<!-- panel -->
+						</div> <!-- accordion2 -->
+					</div>
+				</div> <!-- row -->
+			{% else %}
+				<p>No cards available.</p>
+			{% endif %}
+		</div> <!-- container-fluid -->
 
 	<script type="text/javascript">
 		var cards = {};
@@ -140,6 +166,10 @@
 			arr: [],
 			addToDeck: function(card) {
 				this['arr'].push(card);
+				$("#deck-list").append("<li class='list-group-item'>" + card.title + "</li>");
+				$(".list-group-item").click(function(){
+					$(this).remove();
+				});
 			}
 		};
 		
@@ -158,6 +188,11 @@
 
 			deck.addToDeck(cards[card.attr('data-code')]);
 			$("#alert-message").html("Added " + card.attr('data-title'));
+			if (card.hasClass("anarch")) {
+				$(".neutral").css("opacity", 0.4);
+				$(".shaper").css("opacity", 0.4);
+				$(".criminal").css("opacity", 0.4);
+			}
 		});
 	</script>
 	</body>
