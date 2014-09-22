@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Android: Netrunner - Deckbuilder</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+		<script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+		{% load bootstrap3 %}
+		{% bootstrap_css %}
+		{% bootstrap_javascript %}
+		{% bootstrap_messages %}
+
+		{% load staticfiles %}
+		{% load preview_extras %}
+	</head>
+	<body>
+		<div class="container-fluid">
+			<h1>Deckbuilder</h1>
+			<div class="row">
+				<div class="col-md-9">
+					<h2>Runner</h2>
+					<table id="runner_table" class="display">
+					</table>
+
+					<h2>Corp</h2>
+					<table id="corp_table" class="display">
+					</table>
+				</div>
+				<div class="col-md-3">
+					<div class="col-sm-12">
+						<div class="panel-group" id="accordion">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#collapsePreview">
+										Preview
+										</a>
+									</h4>
+								</div> <!-- panel-heading -->
+								<div id="collapsePreview" class="panel-collapse collapse in">
+									<div class="panel-body">
+										<a href="#" class="thumbnail">
+											<img src="#" id="cardView"/>
+										</a>
+									</div> <!-- panel-body -->
+								</div> <!-- collapsePreview -->
+							</div> <!-- panel -->
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="accordion" href="#collapseRunner">
+										Runner Deck
+										</a>
+									</h4>
+								</div> <!-- panel-heading -->
+								<div id="collapseRunner" class="panel-collapse collapse">
+									<div class="panel-body">
+										<ul class="list-group" id="runner_deck">
+										</ul>
+									</div> <!-- panel-body -->
+								</div> <!-- collapseRunner -->
+							</div> <!-- panel -->
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="accordion" href="#collapseCorp">
+										Corp Deck
+										</a>
+									</h4>
+								</div> <!-- panel-heading -->
+								<div id="collapseCorp" class="panel-collapse collapse">
+									<div class="panel-body">
+										<ul class="list-group" id="corp_deck">
+										</ul>
+									</div> <!-- panel-body -->
+								</div> <!-- collapseCorp -->
+							</div> <!-- panel -->
+						</div> <!-- panel-group -->
+					</div>
+				</div>
+			</div>
+		</div> <!-- container -->
+
+		<script>
+			$(document).ready(function() {
+				var runners = {{ runners|safe }},
+					corps = {{ corps|safe }},
+					cards = {};
+
+				$.each(runners, function(index, value){
+					cards[value['title']] = value;
+				});
+
+				$.each(corps, function(index, value){
+					cards[value['title']] = value;
+				});
+
+				var table = $('#runner_table').DataTable({
+					'data': runners,
+					'columns': [
+						{ 'data': 'title', 'title': 'Title'},
+						{ 'data': 'faction', 'title': 'Faction'},
+						{ 'data': 'card_type', 'title': 'Type'},
+						{ 'data': 'subtype', 'title': 'Subtype'},
+						{ 'data': 'cost', 'title': 'Cost'},
+						{ 'data': 'code', 'visible': false, 'searchable': false}
+					]
+				});
+
+				$('#corp_table').DataTable({
+					'data': corps,
+					'columns': [
+						{ 'data': 'title', 'title': 'Title'},
+						{ 'data': 'faction', 'title': 'Faction'},
+						{ 'data': 'card_type', 'title': 'Type'},
+						{ 'data': 'subtype', 'title': 'Subtype'},
+						{ 'data': 'cost', 'title': 'Cost'},
+						{ 'data': 'code', 'visible': false, 'searchable': false}
+					]
+				});
+
+				$('.thumbnail').hide();
+
+				$('#runner_table tbody').on('mouseover', 'tr', function(){
+					$('.thumbnail').show();
+					var title = $('td', this).eq(0).text(),
+						card = cards[title],
+						path = '/static/cards/' + card['code'] + '.png?1';
+					$('#cardView').attr('src', path);
+				});
+
+				$('#corp_table tbody').on('mouseover', 'tr', function(){
+					$('.thumbnail').show();
+					var title = $('td', this).eq(0).text(),
+						card = cards[title],
+						path = '/static/cards/' + card['code'] + '.png?1';
+					$('#cardView').attr('src', path);
+				});
+
+				$('#runner_table tbody').on('click', 'tr', function() {
+					var title = $('td', this).eq(0).text(),
+						card = cards[title],
+						path = '/static/cards/' + card['code'] + '.png?1';
+					$("#runner_deck").append("<li class='list-group-item'>" + card.title + "</li>");
+					$(".list-group-item").click(function(){
+						$(this).remove();
+					});
+				});
+
+				$('#corp_table tbody').on('click', 'tr', function() {
+					var title = $('td', this).eq(0).text(),
+						card = cards[title],
+						path = '/static/cards/' + card['code'] + '.png?1';
+					$("#corp_deck").append("<li class='list-group-item'>" + card.title + "</li>");
+					$(".list-group-item").click(function(){
+						$(this).remove();
+					});
+				});
+			});
+		</script>
+	</body>
+</html>
