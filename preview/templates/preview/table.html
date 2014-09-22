@@ -19,13 +19,38 @@
 			<h1>Deckbuilder</h1>
 			<div class="row">
 				<div class="col-md-9">
-					<h2>Runner</h2>
-					<table id="runner_table" class="display">
-					</table>
-
-					<h2>Corp</h2>
-					<table id="corp_table" class="display">
-					</table>
+					<div class="panel-group" id="CardAccordion">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#CardAccordion" href="#collapseRun">
+									Runner
+									</a>
+								</h4>
+							</div> <!-- panel-heading -->
+							<div id="collapseRun" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<table id="runner_table" class="display">
+									</table>
+								</div> <!-- panel-body -->
+							</div> <!-- collapseRun -->
+						</div> <!-- panel -->
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#CardAccordion" href="#collapseCor">
+									Corporation
+									</a>
+								</h4>
+							</div> <!-- panel-heading -->
+							<div id="collapseCor" class="panel-collapse collapse">
+								<div class="panel-body">
+									<table id="corp_table" class="display">
+									</table>
+								</div> <!-- panel-body -->
+							</div> <!-- collapseCor -->
+						</div> <!-- panel -->
+					</div> <!-- panel-group -->
 				</div>
 				<div class="col-md-3">
 					<div class="col-sm-12">
