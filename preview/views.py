@@ -7,7 +7,7 @@ def index(request):
 	return render(request, 'preview/index.html', context)
 
 def all(request):
-	runners = Card.objects.filter(side_code='runner')
+	runners = Card.objects(side_code='runner', cyclenumber__ne=0)
 	runner_identities = runners.filter(type_code='identity')
 	runner_events = runners.filter(type_code='event')
 	runner_hardwares = runners.filter(type_code='hardware')
