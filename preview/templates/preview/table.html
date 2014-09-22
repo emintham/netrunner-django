@@ -83,6 +83,8 @@
 									<div class="panel-body">
 										<ul class="list-group" id="runner_deck">
 										</ul>
+										<button type="button" class="btn btn-primary" id='download'>Download Deck</button>
+										<button type="button" class="btn btn-danger" id='clear'>Clear Deck</button>
 									</div> <!-- panel-body -->
 								</div> <!-- collapseRunner -->
 							</div> <!-- panel -->
@@ -128,12 +130,25 @@
 				'faction': '',
 				'influence': 0,
 				'influence_max': 100,
+				'identity': '',
+				clearDeck: function() {
+					// clear runner deck
+					$('#runner_deck').html('');
+					for (key in this) {
+						delete this[key];
+					}
+					this.identity = '';
+					this.influence = 0;
+					this.influence_max = 100;
+					this.faction = '';
+				},
 				removeFromDeck: function(title) {
 					if (title in this) {
 						if (this[title] == 1) {
 							if (cards[title]['type_code'] == 'identity') {
 								this.faction = '';
 								this.influence_max = 0;
+								this.identity = '';
 							}
 							delete this[title];
 							this.influence -= cards[title]['factioncost'];
@@ -174,6 +189,7 @@
 						if (cards[title]['type_code'] == 'identity') {
 							this.faction = cards[title]['faction'];
 							this.influence_max = cards[title]['influencelimit'];
+							this.identity = title;
 							addToList(title, "#runner_deck");
 							this[title] = 1;
 						}
@@ -193,6 +209,14 @@
 						}
 					}
 					console.log('Influence total: ' + this.influence);
+				},
+				printDeck: function(title) {
+					console.log(this.identity);
+					for (key in this) {
+						if (key != this.identity) {
+							console.log(this[key] + 'x ' + key);
+						}
+					}
 				}
 			}, corpDeck = {};
 
@@ -230,6 +254,38 @@
 					]
 				});
 
+				Object.defineProperty(runnerDeck, 'faction', {
+					enumerable: false
+				});
+
+				Object.defineProperty(runnerDeck, 'identity', {
+					enumerable: false
+				});
+
+				Object.defineProperty(runnerDeck, 'influence', {
+					enumerable: false
+				});
+
+				Object.defineProperty(runnerDeck, 'influence_max', {
+					enumerable: false
+				});
+
+				Object.defineProperty(runnerDeck, 'removeFromDeck', {
+					enumerable: false
+				});
+
+				Object.defineProperty(runnerDeck, 'addToDeck', {
+					enumerable: false
+				});
+
+				Object.defineProperty(runnerDeck, 'printDeck', {
+					enumerable: false
+				});
+
+				Object.defineProperty(runnerDeck, 'clearDeck', {
+					enumerable: false
+				});
+
 				$('.thumbnail').hide();
 
 				// table behaviour (preview)
@@ -263,6 +319,22 @@
 					$(".list-group-item").click(function(){
 						$(this).remove();
 					});
+				});
+
+				// button behaviour
+				$('#clear').on('click', function() {
+					runnerDeck.clearDeck();
+				});
+
+				$('#download').on('click', function() {
+					var str = '';
+					str += runnerDeck.identity;
+					for (key in runnerDeck) {
+						str += runnerDeck[key] + 'x ' + key + '\n';
+					}
+					var blob = new Blob([str], { type: "text/plain"});
+					var url = URL.createObjectURL(blob);
+					window.location = url;
 				});
 			});
 		</script>
