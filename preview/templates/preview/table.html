@@ -53,58 +53,60 @@
 					</div> <!-- panel-group -->
 				</div>
 				<div class="col-md-3">
-					<div class="col-sm-12">
-						<div class="panel-group" id="accordion">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion" href="#collapsePreview">
-										Preview
-										</a>
-									</h4>
-								</div> <!-- panel-heading -->
-								<div id="collapsePreview" class="panel-collapse collapse in">
-									<div class="panel-body">
-										<a href="#" class="thumbnail">
-											<img src="#" id="cardView"/>
-										</a>
-									</div> <!-- panel-body -->
-								</div> <!-- collapsePreview -->
-							</div> <!-- panel -->
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="accordion" href="#collapseRunner">
-										Runner Deck
-										</a>
-									</h4>
-								</div> <!-- panel-heading -->
-								<div id="collapseRunner" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ul class="list-group" id="runner_deck">
-										</ul>
-										<button type="button" class="btn btn-primary" id='download'>Download Deck</button>
-										<button type="button" class="btn btn-danger" id='clear'>Clear Deck</button>
-									</div> <!-- panel-body -->
-								</div> <!-- collapseRunner -->
-							</div> <!-- panel -->
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="accordion" href="#collapseCorp">
-										Corp Deck
-										</a>
-									</h4>
-								</div> <!-- panel-heading -->
-								<div id="collapseCorp" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ul class="list-group" id="corp_deck">
-										</ul>
-									</div> <!-- panel-body -->
-								</div> <!-- collapseCorp -->
-							</div> <!-- panel -->
-						</div> <!-- panel-group -->
-					</div>
+					<div data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+						<div class="col-sm-12">
+							<div class="panel-group" id="accordion">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordion" href="#collapsePreview">
+											Preview
+											</a>
+										</h4>
+									</div> <!-- panel-heading -->
+									<div id="collapsePreview" class="panel-collapse collapse in">
+										<div class="panel-body">
+											<a href="#" class="thumbnail">
+												<img src="#" id="cardView"/>
+											</a>
+										</div> <!-- panel-body -->
+									</div> <!-- collapsePreview -->
+								</div> <!-- panel -->
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="accordion" href="#collapseRunner">
+											Runner Deck
+											</a>
+										</h4>
+									</div> <!-- panel-heading -->
+									<div id="collapseRunner" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ul class="list-group" id="runner_deck">
+											</ul>
+											<button type="button" class="btn btn-primary" id='download'>Download Deck</button>
+											<button type="button" class="btn btn-danger" id='clear'>Clear Deck</button>
+										</div> <!-- panel-body -->
+									</div> <!-- collapseRunner -->
+								</div> <!-- panel -->
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="accordion" href="#collapseCorp">
+											Corp Deck
+											</a>
+										</h4>
+									</div> <!-- panel-heading -->
+									<div id="collapseCorp" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ul class="list-group" id="corp_deck">
+											</ul>
+										</div> <!-- panel-body -->
+									</div> <!-- collapseCorp -->
+								</div> <!-- panel -->
+							</div> <!-- panel-group -->
+						</div>
+					</div> <!-- affix -->
 				</div>
 			</div>
 		</div> <!-- container -->
@@ -255,36 +257,15 @@
 					]
 				});
 
-				Object.defineProperty(runnerDeck, 'faction', {
-					enumerable: false
-				});
-
-				Object.defineProperty(runnerDeck, 'identity', {
-					enumerable: false
-				});
-
-				Object.defineProperty(runnerDeck, 'influence', {
-					enumerable: false
-				});
-
-				Object.defineProperty(runnerDeck, 'influence_max', {
-					enumerable: false
-				});
-
-				Object.defineProperty(runnerDeck, 'removeFromDeck', {
-					enumerable: false
-				});
-
-				Object.defineProperty(runnerDeck, 'addToDeck', {
-					enumerable: false
-				});
-
-				Object.defineProperty(runnerDeck, 'printDeck', {
-					enumerable: false
-				});
-
-				Object.defineProperty(runnerDeck, 'clearDeck', {
-					enumerable: false
+				Object.defineProperties(runnerDeck, {
+					faction: { enumerable: false},
+					identity: { enumerable: false},
+					influence: { enumerable: false},
+					influence_max: { enumerable: false},
+					removeFromDeck: { enumerable: false},
+					addToDeck: { enumerable: false},
+					printDeck: { enumerable: false},
+					clearDeck: { enumerable: false}
 				});
 
 				$('.thumbnail').hide();
